@@ -41,11 +41,29 @@ def circumference(radius):
 #Attempt to calculate sin using the Taylor Series expansion
 #sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
 def sin(angle):
-    # Convert degrees to radians
+    # Convert degrees to radians and make angle sensible size
+    angle = angle % 360
     radians = angle * constants.pi / 180
     result = 0
     for i in range(10): # 10 terms for good precision
         sign = (-1) ** i
         exponent = 2 * i + 1
         result += sign * (radians ** exponent) / algebra.factorial(exponent)
-    return round(result, 10)
+    return result
+
+def sin(angle):
+    # Reduce angle to [-pi, pi]
+    x = (angle % 360) * math.pi / 180
+    if x > algebra.pi:
+        x -= 2 * algebra.pi
+    
+    term = x  # first term
+    result = x
+    i = 1
+    while True:
+        term *= -x*x / ((2*i)*(2*i+1))
+        if abs(term) < 1e-15:
+            break
+        result += term
+        i += 1
+    return result
