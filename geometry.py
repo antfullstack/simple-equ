@@ -1,4 +1,5 @@
-import math 
+import math
+import constants
 
 def pythagoras(a, b):
     result = a*a + b*b
@@ -12,8 +13,7 @@ def rectangle_area(a, b):
     return a*b
 
 def circle_area(radius):
-    pi = 3.14159
-    return pi * (radius ** 2)
+    return constants.pi * (radius ** 2)
 
 def trapezoid_area(base_one, base_two, height):
     return (base_one + base_two) / 2 * height
