@@ -54,8 +54,8 @@ def sin(angle):
 def sin(angle):
     # Reduce angle to [-pi, pi]
     x = (angle % 360) * math.pi / 180
-    if x > algebra.pi:
-        x -= 2 * algebra.pi
+    if x > constants.pi:
+        x -= 2 * constants.pi
     
     term = x  # first term
     result = x
@@ -67,3 +67,17 @@ def sin(angle):
         result += term
         i += 1
     return result
+
+def cosin(angle):
+    angle = angle % 360
+    #Sign is dependant on the angle
+    if angle >= 0 and angle < 90 or angle >= 270 and angle <= 360:
+        cosine = math.sqrt(1- sin(angle) * sin(angle))
+    elif angle >= 90 and angle < 180 or angle >= 180 and angle < 270:
+        cosine = -1 * math.sqrt(1- sin(angle) * sin(angle))
+    return cosine
+
+def tan(angle):
+    return sin(angle) / cosin(angle)
+
+print(tan(30))
