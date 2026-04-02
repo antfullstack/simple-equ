@@ -1,5 +1,6 @@
 import math
 import constants
+import algebra
 
 def pythagoras(a, b):
     result = a*a + b*b
@@ -36,3 +37,15 @@ def calculate_radius(diameter):
 
 def circumference(radius):
     return 2 * constants.pi * radius
+
+#Attempt to calculate sin using the Taylor Series expansion
+#sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
+def sin(angle):
+    # Convert degrees to radians
+    radians = angle * constants.pi / 180
+    result = 0
+    for i in range(10): # 10 terms for good precision
+        sign = (-1) ** i
+        exponent = 2 * i + 1
+        result += sign * (radians ** exponent) / algebra.factorial(exponent)
+    return round(result, 10)
