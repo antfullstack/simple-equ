@@ -1,3 +1,6 @@
+import sys
+sys.path.append('.')
+
 import constants
 import simple_equ.math.algebra as algebra
 
@@ -37,21 +40,22 @@ def calculate_radius(diameter):
 def circumference(radius):
     return 2 * constants.pi * radius
 
-def distance(a: tuple, b: tuple):
+def distance(a: tuple | list, b: tuple | list) -> int:
     # Convert any lists to tuples
     a, b = [tuple(p) if isinstance(p, list) else p for p in (a, b)]
     
-    if all(isinstance(x, tuple) for x in (a, b)):
-        if len(a) == 2 and len(b) == 2:    
-            formula = ((a[0] - b[0]) ** 2) + ((a[1] - b[1]) ** 2)
-            result = algebra.sqrt(formula)
-            return result
-        elif len(a) == 3 and len(b) == 3:
-            formula = ((a[0] - b[0]) ** 2) + ((a[1] - b[1]) ** 2) + ((a[2] - b[2]) ** 2)
-            result = algebra.sqrt(formula)
-            return result   
-        raise ValueError("Inputs must be either 2d or 3d coordinates")
-    raise TypeError("Must input tuples or lists as coordinates for points")
+    if not all(isinstance(x, tuple) for x in (a, b)):
+        raise TypeError("Must input tuples or lists as coordinates for points")
+            
+    if len(a) == 2 and len(b) == 2:    
+        formula = ((a[0] - b[0]) ** 2) + ((a[1] - b[1]) ** 2)
+        result = algebra.sqrt(formula)
+        return result
+    elif len(a) == 3 and len(b) == 3:
+        formula = ((a[0] - b[0]) ** 2) + ((a[1] - b[1]) ** 2) + ((a[2] - b[2]) ** 2)
+        result = algebra.sqrt(formula)
+        return result   
+    raise ValueError("Inputs must be either 2d or 3d coordinates")
 
 #Attempt to calculate sin using the Taylor Series expansion
 #sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
