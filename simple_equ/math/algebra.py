@@ -45,3 +45,11 @@ def basic_quadratic(a, b, c):
 def basic_linear(a, b):
     x = -b/a
     return x
+
+def is_divisible(a: int | float, b: int | float) -> bool:
+    # Checks if a is divisible by b by checking if the remainder of a divided by b is 0.
+    # Raise ValueError if b is zero.
+
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a % b == 0
