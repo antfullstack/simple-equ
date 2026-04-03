@@ -23,5 +23,4 @@ See `contributing.md` for ways to get started.
 - Functions from different fields
 - Reusable
 
-
-** Do not forget to star the repo! It means a lot!
+Do not forget to star the repo! It means a lot!
