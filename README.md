@@ -24,4 +24,4 @@ See `contributing.md` for ways to get started.
 - Reusable
 
 
-
+** Do not forget to star the repo! It means a lot! **
