@@ -1,0 +1,60 @@
+name: Auto Version Bump
+
+on:
+  push:
+    branches: ["main"]
+    # Don't trigger on the version bump commit itself (infinite loop guard)
+    paths-ignore:
+      - "pyproject.toml"
+
+permissions:
+  contents: write
+
+jobs:
+  bump-version:
+    name: Bump patch version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Use a PAT or the default token — needs write access to push back
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Read current version
+        id: read_version
+        run: |
+          VERSION=$(python - <<'EOF'
+          import tomllib, pathlib
+          data = tomllib.loads(pathlib.Path("pyproject.toml").read_text())
+          print(data["project"]["version"])
+          EOF
+          )
+          echo "current=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Compute next patch version
+        id: next_version
+        run: |
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${{ steps.read_version.outputs.current }}"
+          NEXT_PATCH=$((PATCH + 1))
+          echo "next=${MAJOR}.${MINOR}.${NEXT_PATCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Update version in pyproject.toml
+        run: |
+          sed -i 's/^version = "${{ steps.read_version.outputs.current }}"/version = "${{ steps.next_version.outputs.next }}"/' pyproject.toml
+
+      - name: Commit and tag new version
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml
+          git commit -m "chore: bump version ${{ steps.read_version.outputs.current }} → ${{ steps.next_version.outputs.next }} [skip ci]"
+          git tag "v${{ steps.next_version.outputs.next }}"
+          git push origin main --follow-tags
