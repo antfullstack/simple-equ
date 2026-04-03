@@ -33,11 +33,15 @@ def sqrt(number):
     else: 
         raise ValueError("Not a real number")
 
-def basic_quadratic(a, b, c):
-    
+#Forms of basic linear and quadratic equations
+def basic_quadratic(a, b, c): 
     d = (b**2) - (4*a*c)
-    sqrt_d = algebra.sqrt(d)
+    sqrt_d = sqrt(d)
 
     root1 = (-b + sqrt_d) / (2*a)
     root2 = (-b - sqrt_d) / (2*a)
     return root1, root2
+
+def basic_linear(a, b):
+    x = -b/a
+    return x

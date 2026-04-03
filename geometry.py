@@ -68,7 +68,7 @@ def sin(angle):
 
 def sin(angle):
     # Reduce angle to [-pi, pi]
-    x = (angle % 360) * math.pi / 180
+    x = (angle % 360) * constants.pi / 180
     if x > constants.pi:
         x -= 2 * constants.pi
     
