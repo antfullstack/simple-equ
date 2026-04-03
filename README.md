@@ -1,6 +1,12 @@
-# math-equ
+# simple-equ
 
 An open source library containing multiple known STEM equations in a functional form. 
+
+## Installing
+```pip install simple-equ```
+
+(For versions 3.8 or newer)
+
 
 ## Contributing
 
@@ -17,4 +23,4 @@ See `contributing.md` for ways to get started.
 - Functions from different fields
 - Reusable
 
-
+Do not forget to star the repo if you like it! It means a lot!
