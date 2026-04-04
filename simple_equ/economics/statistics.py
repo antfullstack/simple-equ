@@ -35,7 +35,10 @@ def linear_regression(x, y):
         y = list(map(float, y))
     except ValueError:
         print("Invalid argument types.")
-        return 
+        return
+    if len(x) != len(y):
+        print("x and y must have the same length.")
+        return
     n = len(x)
     sum_x = sum(x)
     sum_y = sum(y)
