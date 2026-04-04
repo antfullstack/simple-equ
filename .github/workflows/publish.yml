@@ -55,6 +55,8 @@ jobs:
           git add pyproject.toml
           git commit -m "chore: bump version ${{ steps.read_version.outputs.current }} → ${{ steps.next_version.outputs.next }} [skip ci]"
           git tag "v${{ steps.next_version.outputs.next }}"
+          git fetch origin main
+          git rebase origin/main
           git push origin main --follow-tags
 
       - name: Install build dependencies
