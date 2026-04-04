@@ -1,40 +1,40 @@
 import constants
 import simple_equ.math.algebra as algebra
 
-def pythagoras(a, b):
+def pythagoras(a: int | float, b: int | float) -> float:
     result = a*a + b*b
     hypotenuse = algebra.sqrt(result)
     return hypotenuse
 
-def square_area(a):
+def square_area(a: int | float):
     return a*a
 
-def cube_area(a):
+def cube_area(a: int | float):
     return a*a*a
 
-def rectangle_area(a, b):
+def rectangle_area(a: int | float, b: int | float):
     return a*b
 
-def circle_area(radius):
+def circle_area(radius: int | float) -> float:
     return constants.pi * (radius ** 2)
 
-def trapezoid_area(base_one, base_two, height):
+def trapezoid_area(base_one: int | float, base_two: int | float, height: int | float):
     return (base_one + base_two) / 2 * height
 
-def triangle_area(base, height):
+def triangle_area(base: int | float, height: int | float):
     return (base * height) / 2
 
-def pyramid_surface(length, width, height):
+def pyramid_surface(length: int | float, width: int | float, height: int | float):
     result = length * width + length * algebra.sqrt((width/2) * (width/2) + height * height) + width * algebra.sqrt((length/2) * (length/2) + height*height)
     return result
 
-def pyramid_volume(height, length, width):
+def pyramid_volume(height: int | float, length: int | float, width: int | float):
     return (length * width * height) / 3
 
-def calculate_radius(diameter):
+def calculate_radius(diameter: int | float):
     return diameter / 2
 
-def circumference(radius):
+def circumference(radius: int | float):
     return 2 * constants.pi * radius
 
 def distance(a: tuple | list, b: tuple | list) -> float:
@@ -56,7 +56,7 @@ def distance(a: tuple | list, b: tuple | list) -> float:
 
 #Attempt to calculate sin using the Taylor Series expansion
 #sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
-def sin(angle):
+def sin(angle: int | float):
     # Convert degrees to radians and make angle sensible size
     angle = angle % 360
     radians = angle * constants.pi / 180
@@ -67,7 +67,7 @@ def sin(angle):
         result += sign * (radians ** exponent) / algebra.factorial(exponent)
     return result
 
-def sin(angle):
+def sin(angle: int | float):
     # Reduce angle to [-pi, pi]
     x = (angle % 360) * constants.pi / 180
     if x > constants.pi:
@@ -84,7 +84,7 @@ def sin(angle):
         i += 1
     return result
 
-def cosin(angle):
+def cosin(angle: int | float):
     angle = angle % 360
     #Sign is dependant on tshe angle
     if angle >= 0 and angle < 90 or angle >= 270 and angle <= 360:
@@ -93,8 +93,8 @@ def cosin(angle):
         cosine = -1 * algebra.sqrt(1- sin(angle) * sin(angle))
     return cosine
 
-def tan(angle):
+def tan(angle: int | float):
     return sin(angle) / cosin(angle)
 
-def sphere_surface(radius):
+def sphere_surface(radius: int | float):
     return 4 * constants.pi * radius**2

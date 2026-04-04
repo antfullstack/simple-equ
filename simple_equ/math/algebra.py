@@ -1,8 +1,8 @@
-def power(base, exponent):
+def power(base: int | float, exponent: int | float) -> int | float:
     return base ** exponent
 
 #Takes a number and until it is equal to 0 it multiplies it with its previous in order storing the new result.
-def factorial(number):
+def factorial(number: int | float):
     result = 1
     while number > 0:
         result *= number
@@ -10,13 +10,13 @@ def factorial(number):
     return result
 
 #Implementation based on the Eucledean algorithm.
-def gcd(a, b):
+def gcd(a: int | float, b: int | float):
     if b == 0: 
         return a
     return gcd(b, a % b)
 
 #Use Newton's method to closely approximate the square root of a number
-def sqrt(number):
+def sqrt(number: int | float):
     if number > 0:
        x = number 
        tolerance = 0.000000000001
@@ -34,7 +34,7 @@ def sqrt(number):
         raise ValueError("Not a real number")
 
 #Forms of basic linear and quadratic equations
-def basic_quadratic(a, b, c): 
+def basic_quadratic(a: int | float, b: int | float, c: int | float): 
     d = (b**2) - (4*a*c)
     sqrt_d = sqrt(d)
 
@@ -42,7 +42,7 @@ def basic_quadratic(a, b, c):
     root2 = (-b - sqrt_d) / (2*a)
     return root1, root2
 
-def basic_linear(a, b):
+def basic_linear(a: int | float, b: int | float):
     x = -b/a
     return x
 
