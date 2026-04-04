@@ -1,4 +1,4 @@
-def average(lst):
+def average(lst: list | tuple) -> int | float:
     # Converts any numbers in string form to ints and checks for invalid inputs
     try:
         lst = list(map(int, lst))
@@ -8,7 +8,7 @@ def average(lst):
     num_sum = sum(lst)
     return num_sum / len(lst)
 
-def median(lst):
+def median(lst: list | tuple) -> int | float:
     try:
         lst = list(map(int, lst))
     except ValueError:
