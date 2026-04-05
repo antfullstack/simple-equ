@@ -82,4 +82,8 @@ def tan(angle: int | float):
 def sphere_surface(radius: int | float):
     return 4 * constants.pi * radius**2
 
-print(circle_area(4))
+def slope(point_one: tuple, point_two: tuple) -> float:
+    # Ensure points are 2D coordinates
+    if len(point_one) != 2 or len(point_two) != 2:
+        raise ValueError("Points must be 2D coordinates")
+    return (point_two[1] - point_one[1]) / (point_two[0] - point_one[0])
