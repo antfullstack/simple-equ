@@ -32,8 +32,11 @@ def sqrt(number: int | float):
         return 0; 
     else: 
         raise ValueError("Not a real number")
+    
+def cbrt(x):
+    return x**(1/3) if x >= 0 else -(-x)**(1/3)
 
-#Forms of basic linear and quadratic equations
+#Forms of basic linear,quadratic and cubic equations
 def basic_quadratic(a: int | float, b: int | float, c: int | float): 
     d = (b**2) - (4*a*c)
     sqrt_d = sqrt(d)
