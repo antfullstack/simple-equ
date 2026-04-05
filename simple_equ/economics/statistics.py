@@ -1,5 +1,10 @@
 def average(lst: list | tuple) -> int | float:
-    # Converts any numbers in string form to ints and checks for invalid inputs
+    """Calculates the average of a list of numbers.
+
+    This function takes a list or tuple of numbers and returns their average.
+    It attempts to convert all elements to integers, and handles potential errors
+    if the input contains non-numeric values.
+    """
     try:
         lst = list(map(int, lst))
     except ValueError:
@@ -9,6 +14,14 @@ def average(lst: list | tuple) -> int | float:
     return num_sum / len(lst)
 
 def median(lst: list | tuple) -> int | float:
+    """Finds the middle value of a list of numbers.
+
+    This function takes a list or tuple of numbers and returns the median.
+    It sorts the list and identifies the middle value. If the list has an even
+    number of elements, it returns the average of the two middle values.
+    It attempts to convert all elements to integers, and handles potential errors
+    if the input contains non-numeric values.
+    """
     try:
         lst = list(map(int, lst))
     except ValueError:
@@ -22,14 +35,26 @@ def median(lst: list | tuple) -> int | float:
     return sorted_list[median_index]
     
 def percentage(fraction, whole):
+    """Calculates the percentage of a fraction relative to a whole.
+
+    This function takes a fraction and a whole number and returns the percentage
+    that the fraction represents of the whole. It handles potential errors
+    if the input contains invalid argument types.
+    """
     try: 
         result = fraction / whole * 100
         return result
     except ValueError:
         print("Invalid argument types.")
 
-# OLS Linear Regression - returns slope and intercept of the best fit line for the given x and y data points
 def linear_regression(x: list[float] | list[int] , y: list[float] | list[int]) -> float:
+    """Calculates the slope and intercept of a linear regression line.
+
+    This function takes two lists of numbers, x and y, and calculates the
+    slope and intercept of the best-fit line using the Ordinary Least Squares
+    (OLS) method. It ensures that both lists have the same length and handles
+    potential errors if the input contains non-numeric values.
+    """
     try:
         x = list(map(float, x))
         y = list(map(float, y))
