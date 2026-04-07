@@ -22,6 +22,9 @@ def rectangle_area(a: int | float, b: int | float):
 def circle_area(radius: int | float) -> float:
     return constants.pi * (radius ** 2)
 
+def sphere_area(radius: int | float) -> float:     
+    return 4 * constants.pi * (radius ** 2)
+
 def trapezoid_area(base_one: int | float, base_two: int | float, height: int | float):
     return (base_one + base_two) / 2 * height
 
