@@ -39,6 +39,26 @@ def insertion_sort(lst: list[int | float]):
     return lst
 
 
+def quick_sort(lst: list[int | float]):
+    """[Summary]: Return a new list sorted in ascending order using quick sort.
+    [Description]: Selects a pivot element and partitions the input into values
+    less than, equal to, and greater than the pivot. Each partition is sorted
+    recursively and the results are concatenated into a new sorted list.
+    [Usage]: Typical usage example:
+        result = quick_sort([4, 2, 1, 3])
+        print(result)
+    """
+    # Note: Returns a new list
+    if len(lst) <= 1:
+        return lst
+ 
+    pivot = lst[len(lst) // 2]
+    left   = [x for x in lst if x < pivot]
+    middle = [x for x in lst if x == pivot]
+    right  = [x for x in lst if x > pivot]
+ 
+    return quick_sort(left) + middle + quick_sort(right)
+
 # Note: Returns a new list
 def merge_sort(lst: list[int | float]):
     """[Summary]: Return a new list sorted in ascending order with merge sort.
