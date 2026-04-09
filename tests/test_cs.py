@@ -4,7 +4,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from simple_equ.cs.locating import greatest_algorithm, lowest_algorithm, binary_search, interpolation_search
+from simple_equ.cs.locating import greatest_algorithm, lowest_algorithm, binary_search, interpolation_search, exponential_search
 from simple_equ.cs.sorting import bubble_sort, insertion_sort, merge_sort
 
 
@@ -386,3 +386,86 @@ def test_merge_sort_large_input():
     import random
     lst = list(range(100, 0, -1))
     assert merge_sort(lst) == list(range(1, 101))
+
+def test_exponential_search_finds_element():
+    """[Summary]: Verify that exponential_search correctly finds an existing element.
+
+    [Description]: Confirms the function returns the correct index when the
+    target value is present in a sorted sequence.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_exponential_search_finds_element
+    """
+    arr = [1, 3, 5, 7, 9]
+    assert exponential_search(arr, 5) == 2
+
+
+def test_exponential_search_not_found():
+    """[Summary]: Verify that exponential_search returns -1 when target is absent.
+
+    [Description]: Confirms the function correctly indicates absence of the
+    target value in a sorted sequence.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_exponential_search_not_found
+    """
+    arr = [1, 3, 5, 7, 9]
+    assert exponential_search(arr, 4) == -1
+
+
+def test_exponential_search_first_element():
+    """[Summary]: Verify that exponential_search handles the first element correctly.
+
+    [Description]: Confirms the function immediately returns index 0 when the
+    target matches the first element of the sequence.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_exponential_search_first_element
+    """
+    arr = [1, 3, 5, 7, 9]
+    assert exponential_search(arr, 1) == 0
+
+
+def test_exponential_search_last_element():
+    """[Summary]: Verify that exponential_search correctly finds the last element.
+
+    [Description]: Confirms the function properly expands the search range to
+    include and locate the final element in the sequence.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_exponential_search_last_element
+    """
+    arr = [1, 3, 5, 7, 9]
+    assert exponential_search(arr, 9) == 4
+
+
+def test_exponential_search_empty_list():
+    """[Summary]: Verify that exponential_search handles an empty list.
+
+    [Description]: Confirms the function returns -1 when invoked on an empty
+    sequence.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_exponential_search_empty_list
+    """
+    assert exponential_search([], 10) == -1
+
+
+def test_exponential_search_single_element():
+    """[Summary]: Verify that exponential_search handles a single-element list.
+
+    [Description]: Confirms correct behavior when the sequence contains only
+    one element, for both matching and non-matching targets.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_exponential_search_single_element
+    """
+    arr = [5]
+    assert exponential_search(arr, 5) == 0
+    assert exponential_search(arr, 1) == -1

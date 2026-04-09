@@ -96,3 +96,39 @@ def interpolation_search(arr: list[int] | tuple[int], target: int):
         else:
             low = pos + 1
     return -1
+
+def exponential_search(arr, target):
+    """[Summary]: Return the index of a target value using exponential search.
+
+    [Description]: Quickly identifies a search range in a sorted sequence by 
+    repeatedly doubling the index (1, 2, 4, 8, ...) until the target is less 
+    than or equal to the current value or the array bounds are exceeded. Once 
+    the range is found, applies binary search within that interval to locate 
+    the target. Returns -1 when the target is not present.
+
+    [Usage]: Typical usage example:
+
+        result = exponential_search([10, 20, 30, 40, 50], 30, binary_search)
+        print(result)
+    """
+
+    n = len(arr)
+
+    if n == 0: 
+        return -1 
+    
+    #If target is found at first position
+    if arr[0] == target: 
+        return 0 
+    
+    #Here, we find the range for binary search 
+    i = 1
+    while i < n and arr[i] <= target:
+        i *= 2
+
+    left = i // 2
+    right = min (i, n- 1)
+
+    resulting_arr = arr[left:right]
+    return binary_search(resulting_arr, target)
+
