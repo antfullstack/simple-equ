@@ -22,7 +22,7 @@ functionality. But, let us look on how that would realistically look like:
 
 You just import the field of your liking, and then boom!
 
-## Sturcture
+## Structure
 
 The library is structured into fields. These fields have their own folder aka modules. However, a field can have multiple subsets. These subsets are usually 
 present in the form of `python` files. For example: `algebra.py` and `geometry.py`, are examples of subfields of the general math field called **math_general**.
