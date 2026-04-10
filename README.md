@@ -2,6 +2,13 @@
 
 An open source library containing multiple known STEM equations in a functional form. 
 
+## Installation
+```pip install simple-equ```
+
+(For versions 3.8 or newer)
+
+Optional: Use a venv (virtual environment).
+
 ## Usage
 
 simple-equ is simple, yet practical. That is the problem is solves. Sure, someone with some knowledge in their field can implement this library's
@@ -26,14 +33,7 @@ To import something in a practical sense in simple_equ, the structure looks like
 
 Practical examples include: 
 `import simple_equ.math_general.geometry as sg`
-`import simple_equ.economics.statistics as se` 
-
-## Installation
-```pip install simple-equ```
-
-(For versions 3.8 or newer)
-
-Optional: Use a venv (virtual environment). 
+`import simple_equ.economics.statistics as se`  
 
 ## Contributing
 
