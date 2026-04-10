@@ -2,10 +2,10 @@ import pytest
 from pathlib import Path
 import sys
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
 from simple_equ.cs.locating import greatest_algorithm, lowest_algorithm, binary_search, interpolation_search, exponential_search
-from simple_equ.cs.sorting import bubble_sort, insertion_sort, merge_sort
+from simple_equ.cs.sorting import bubble_sort, insertion_sort, merge_sort, heap_sort, heapify
 
 
 # ==============================================================================
@@ -469,3 +469,87 @@ def test_exponential_search_single_element():
     arr = [5]
     assert exponential_search(arr, 5) == 0
     assert exponential_search(arr, 1) == -1
+
+def test_heapify_basic_case():
+    """[Summary]: Verify that heapify enforces max-heap property on a subtree.
+
+    [Description]: Confirms that heapify correctly rearranges elements so that
+    the parent node is greater than its children for a simple unsorted subtree.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_heapify_basic_case
+    """
+    arr = [3, 9, 2]
+    heapify(arr, len(arr), 0)
+    assert arr == [9, 3, 2]
+
+
+def test_heapify_no_change_needed():
+    """[Summary]: Verify that heapify leaves a valid heap unchanged.
+
+    [Description]: Confirms that heapify does not modify the array when the
+    subtree already satisfies the max-heap property.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_heapify_no_change_needed
+    """
+    arr = [9, 3, 2]
+    heapify(arr, len(arr), 0)
+    assert arr == [9, 3, 2]
+
+
+def test_heap_sort_empty_list():
+    """[Summary]: Verify that heap_sort handles an empty list.
+
+    [Description]: Confirms the function returns an empty list when given
+    an empty input.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_heap_sort_empty_list
+    """
+    assert heap_sort([]) == []
+
+
+def test_heap_sort_single_element():
+    """[Summary]: Verify that heap_sort handles a single-element list.
+
+    [Description]: Confirms the function correctly returns a list containing
+    the single element without modification.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_heap_sort_single_element
+    """
+    assert heap_sort([5]) == [5]
+
+
+def test_heap_sort_multiple_elements():
+    """[Summary]: Verify that heap_sort correctly sorts multiple elements.
+
+    [Description]: Confirms the function returns a new list with all elements
+    sorted in ascending order for a typical unsorted input.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_heap_sort_multiple_elements
+    """
+    arr = [12, 11, 13, 5, 6, 7]
+    assert heap_sort(arr) == [5, 6, 7, 11, 12, 13]
+
+
+def test_heap_sort_does_not_modify_input():
+    """[Summary]: Verify that heap_sort does not modify the original list.
+
+    [Description]: Confirms the function returns a new sorted list while
+    leaving the input list unchanged.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_algorithms.py -k test_heap_sort_does_not_modify_input
+    """
+    arr = [4, 1, 3]
+    _ = heap_sort(arr)
+    assert arr == [4, 1, 3]

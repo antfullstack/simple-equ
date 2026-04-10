@@ -108,3 +108,55 @@ def merge_helper(left, right):
     sorted_lst.extend(right[j:])
 
     return sorted_lst
+
+def heapify(arr, n, i):
+    """[Summary]: Ensure subtree rooted at index i satisfies max-heap property.
+
+    [Description]: Compares a node with its left and right children and swaps it
+    with the largest value if necessary. This process is applied recursively to
+    maintain the max-heap structure within the subtree.
+
+    [Usage]: Typical usage example:
+
+        arr = [3, 9, 2, 1, 4, 5]
+        heapify(arr, len(arr), 0)
+    """
+    largest = i 
+    left = 2 * i + 1 
+    right = 2 * i + 2
+
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    
+    if right < n and arr[right] > arr[largest]:
+        right = largest
+    
+    if largest != i: 
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+def heap_sort(arr):
+    """[Summary]: Sort a list using the heap sort algorithm and return a new list.
+
+    [Description]: Creates a copy of the input list and transforms it into a
+    max heap. It then repeatedly extracts the largest element (root) and places
+    it at the end of the list, shrinking the heap each time until fully sorted.
+
+    [Usage]: Typical usage example:
+
+        result = heap_sort([12, 11, 13, 5, 6, 7])
+        print(result)
+    """
+    new_arr = arr.copy()   
+    n = len(new_arr)
+
+    # Build max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(new_arr, n, i)
+
+    # Extract elements
+    for i in range(n - 1, 0, -1):
+        new_arr[i], new_arr[0] = new_arr[0], new_arr[i]
+        heapify(new_arr, i, 0)
+
+    return new_arr
