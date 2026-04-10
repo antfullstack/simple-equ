@@ -14,7 +14,28 @@ Optional: Use a venv (virtual environment).
 simple-equ is simple, yet practical. That is the problem is solves. Sure, someone with some knowledge in their field can implement this library's
 functionality. But, let us look on how that would realistically look like: 
 
-<img width="1085" height="422" alt="quadratic" src="https://github.com/user-attachments/assets/91818279-b5af-4ad5-b9e1-1d58d5ec938f" />
+`
+a = 3
+b = 4
+c = 4
+
+"""
+Here is an example of implementing a basic quadratic equation
+"""
+import math
+
+delta = b**2 - 4 * a * c
+solution1 = (-b + math.sqrt(delta)) / 2*a
+solution2 = (-b - math.sqrt(delta)) / 2*a
+
+"""
+Here, just an import and a function call is needed!
+"""
+
+import simple_equ.math_general.algebra as sa
+
+result = sa.basic_quadratic(a,b,c)
+`
 
 <img width="1065" height="580" alt="sin" src="https://github.com/user-attachments/assets/a34229b6-628b-452f-8efa-ed1181638ffd" />
 
