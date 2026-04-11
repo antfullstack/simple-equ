@@ -107,3 +107,25 @@ def arctan(x: float | int, iter=20):
         # which corresponds to x in [-1, 1].
         theta = theta - (_tan_rad(theta) - x) / (1 + _tan_rad(theta)**2)
     return theta
+
+
+def arcsin(x: float | int) -> float:
+    """[Summary]: Return the arcsine of x in radians.
+
+    [Description]: Computes the inverse sine of x using the identity
+    arcsin(x) = arctan(x / sqrt(1 - x^2)). The input must be in the range
+    [-1, 1]; values outside this range raise a ValueError.
+
+    [Usage]: Typical usage example:
+
+        result = arcsin(0.5)   # returns approximately π/6 (0.5236...)
+        print(result)
+    """
+    if x < -1 or x > 1:
+        raise ValueError("arcsin(x) is only defined for x in [-1, 1]")
+    if x == 1:
+        return constants.pi / 2
+    if x == -1:
+        return -constants.pi / 2
+    # arcsin(x) = arctan(x / sqrt(1 - x^2))
+    return arctan(x / algebra.sqrt(1 - x * x))
