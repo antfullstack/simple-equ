@@ -1,10 +1,6 @@
 name: Build Wheels
 
 on:
-  # Trigger only after Auto Version Bump completes successfully on main.
-  # This guarantees: (1) no redundant wheel builds on every commit,
-  # (2) wheels always reflect the bumped version, (3) publish only runs
-  # after a real release tag exists.
   workflow_run:
     workflows: ["Auto Version Bump"]
     types: [completed]
@@ -14,14 +10,11 @@ jobs:
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
-    # Don't run if the version bump workflow failed
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
         with:
-          # Check out the commit that was tagged by the version bump workflow,
-          # not just the default HEAD, so the version in pyproject.toml is correct.
           ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
@@ -33,13 +26,13 @@ jobs:
       - name: Install build dependencies
         run: pip install build cython
 
-      # Pre-generate the .c file from repo root so it is bundled in the sdist.
-      # Source installers on unsupported platforms will then only need a C compiler.
       - name: Cythonize
         run: python -m cython --3str simple_equ/geometry/trigonometry.py -o simple_equ/geometry/trigonometry.c
 
+      # --sdist only — manylinux wheels are handled by cibuildwheel in build_wheels.
+      # A plain linux_x86_64 wheel built here would be rejected by PyPI.
       - name: Build sdist
-        run: python -m build --sdist --no-isolation
+        run: python -m build --sdist
 
       - name: Upload sdist
         uses: actions/upload-artifact@v4
@@ -68,9 +61,6 @@ jobs:
       - name: Install cibuildwheel
         run: pip install cibuildwheel
 
-      # cibuildwheel reads [tool.cibuildwheel] from pyproject.toml at repo root.
-      # The before-build hook re-cythonizes inside each isolated container, then
-      # setup.py (inside simple_equ/) compiles geometry/trigonometry.c locally.
       - name: Build wheels
         run: cibuildwheel --output-dir dist
 
