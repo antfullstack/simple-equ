@@ -29,11 +29,11 @@ jobs:
       - name: Cythonize
         run: python -m cython --3str simple_equ/geometry/trigonometry.py -o simple_equ/geometry/trigonometry.c
 
-      # --sdist only — manylinux wheels are handled by cibuildwheel in build_wheels.
-      # A plain linux_x86_64 wheel built here would be rejected by PyPI.
       - name: Build sdist
         run: python -m build --sdist
 
+      # Upload ONLY the .tar.gz — never the .whl produced as a build byproduct.
+      # A plain linux_x86_64 wheel built outside cibuildwheel is rejected by PyPI.
       - name: Upload sdist
         uses: actions/upload-artifact@v4
         with:
@@ -64,6 +64,7 @@ jobs:
       - name: Build wheels
         run: cibuildwheel --output-dir dist
 
+      # Upload ONLY .whl files from cibuildwheel output
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -76,9 +77,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download all artifacts
+      - name: Download sdist
         uses: actions/download-artifact@v4
         with:
+          name: sdist
+          path: dist
+
+      - name: Download wheels
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheels-*
           path: dist
           merge-multiple: true
 
