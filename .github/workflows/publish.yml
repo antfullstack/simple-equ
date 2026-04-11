@@ -48,13 +48,13 @@ jobs:
         run: |
           sed -i 's/^version = "${{ steps.read_version.outputs.current }}"/version = "${{ steps.next_version.outputs.next }}"/' pyproject.toml
 
-      - name: Commit and tag new version
+      - name: Commit, tag and push new version
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add pyproject.toml
-          git commit -m "chore: bump version ${{ steps.read_version.outputs.current }} → ${{ steps.next_version.outputs.next }}"
-          git tag "v${{ steps.next_version.outputs.next }}"
           git fetch origin main
           git rebase origin/main
+          git commit -m "chore: bump version ${{ steps.read_version.outputs.current }} → ${{ steps.next_version.outputs.next }}"
+          git tag "v${{ steps.next_version.outputs.next }}"
           git push origin main --follow-tags --force-with-lease
