@@ -4,7 +4,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from simple_equ.economics.statistics import average, median, percentage, linear_regression, dot
+from simple_equ.economics.statistics import average, median, percentage, linear_regression, dot, standardization
 
 
 # ==============================================================================
@@ -512,3 +512,92 @@ def test_dot_parallel_unit_vectors():
         pytest tests/test_math_utils.py -k test_dot_parallel_unit_vectors
     """
     assert dot([1, 0], [1, 0]) == pytest.approx(1)
+
+
+# ==============================================================================
+# standardization()
+# ==============================================================================
+
+@pytest.mark.parametrize(
+    "lst,expected",
+    [
+        ([1, 2, 3, 4, 5], [-1.414213562373095, -0.7071067811865475, 0.0, 0.7071067811865475, 1.414213562373095]),
+        ([10, 10, 10], [0.0, 0.0, 0.0]),
+        ([0, 1], [-1.0, 1.0]),
+    ],
+)
+def test_standardization_numeric(lst, expected):
+    """[Summary]: Verify that standardization returns the correct z-scores.
+
+    [Description]: Runs a range of numeric list inputs, comparing the result
+    against the known expected z-scores.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_numeric
+    """
+    result = standardization(lst)
+    assert len(result) == len(expected)
+    for r, e in zip(result, expected):
+        assert r == pytest.approx(e)
+
+
+def test_standardization_tuple_input():
+    """[Summary]: Verify that standardization accepts a tuple as input.
+
+    [Description]: Confirms the function handles tuple arguments the same way
+    it handles lists, returning the correct z-scores.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_tuple_input
+    """
+    result = standardization((1, 2, 3))
+    expected = [-1.224744871391589, 0.0, 1.224744871391589]
+    assert len(result) == len(expected)
+    for r, e in zip(result, expected):
+        assert r == pytest.approx(e)
+
+
+def test_standardization_invalid_types_prints_error(capsys):
+    """[Summary]: Verify that standardization prints an error for invalid types.
+
+    [Description]: Confirms that the function prints an error message when
+    provided with non-numeric values and returns an empty list.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_invalid_types_prints_error
+    """
+    result = standardization(['a', 'b', 'c'])
+    captured = capsys.readouterr()
+    assert "Invalid argument types." in captured.out
+    assert result == []
+
+
+def test_standardization_single_element():
+    """[Summary]: Verify that standardization handles single element lists.
+
+    [Description]: Confirms that the function prints an error message for
+    lists with fewer than 2 elements and returns the list itself.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_single_element
+    """
+    result = standardization([5])
+    assert result == []
+
+
+def test_standardization_zero_std_dev():
+    """[Summary]: Verify that standardization handles zero standard deviation.
+
+    [Description]: Confirms that the function returns a list of zeros when
+    all elements are identical.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_zero_std_dev
+    """
+    result = standardization([2, 2, 2, 2])
+    assert result == [0.0, 0.0, 0.0, 0.0]
