@@ -4,7 +4,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
-from simple_equ.cs.locating import greatest_algorithm, lowest_algorithm, jump_search, binary_search, interpolation_search, exponential_search
+from simple_equ.cs.searching import greatest_algorithm, lowest_algorithm, jump_search, binary_search, interpolation_search, exponential_search
 from simple_equ.cs.sorting import bubble_sort, insertion_sort, merge_sort, heap_sort, heapify
 
 
