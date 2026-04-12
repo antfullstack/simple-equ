@@ -1,27 +1,23 @@
 name: Auto Release
-
 on:
   push:
     branches: ["main"]
-
 permissions:
   contents: write
-
 jobs:
   release:
     name: Bump version → Build → Publish
     runs-on: ubuntu-latest
-
+    # ✅ Skip if commit was made by the bot (prevents infinite loop)
+    if: github.event.head_commit.author.name != 'github-actions[bot]'
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN }}
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Read current version
         id: ver
         run: |
@@ -32,7 +28,6 @@ jobs:
           EOF
           )
           echo "current=$VERSION" >> $GITHUB_OUTPUT
-
       - name: Compute next version (PATCH bump)
         id: next
         run: |
@@ -40,19 +35,16 @@ jobs:
           PATCH=$((PATCH + 1))
           NEXT="$MAJOR.$MINOR.$PATCH"
           echo "next=$NEXT" >> $GITHUB_OUTPUT
-
       - name: Update pyproject.toml
         run: |
           sed -i "s/version = \"${{ steps.ver.outputs.current }}\"/version = \"${{ steps.next.outputs.next }}\"/" pyproject.toml
-
       - name: Commit + tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git add pyproject.toml
-          git commit -m "chore: bump version ${{ steps.ver.outputs.current }} → ${{ steps.next.outputs.next }}"
+          # ✅ [skip ci] as belt-and-suspenders backup
+          git commit -m "chore: bump version ${{ steps.ver.outputs.current }} → ${{ steps.next.outputs.next }} [skip ci]"
           git tag "v${{ steps.next.outputs.next }}"
-
           git push origin main
           git push origin "v${{ steps.next.outputs.next }}"

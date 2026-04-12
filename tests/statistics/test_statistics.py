@@ -515,29 +515,89 @@ def test_dot_parallel_unit_vectors():
 
 
 # ==============================================================================
-# bayes_theorem()
+# standardization()
 # ==============================================================================
 
 @pytest.mark.parametrize(
-    "p_b_given_a,p_a,p_b,expected",
+    "lst,expected",
     [
-        (0.9, 0.01, 0.05, 0.18),
-        (0.8, 0.5, 0.4, 1.0),
-        (0.1, 0.1, 0.01, 1.0),
-        (0.5, 0.2, 0.5, 0.2),
+        ([1, 2, 3, 4, 5], [-1.414213562373095, -0.7071067811865475, 0.0, 0.7071067811865475, 1.414213562373095]),
+        ([10, 10, 10], [0.0, 0.0, 0.0]),
+        ([0, 1], [-1.0, 1.0]),
     ],
 )
-def test_bayes_theorem_numeric(p_b_given_a, p_a, p_b, expected):
-    """[Summary]: Verify that bayes_theorem returns the correct posterior probability.
+def test_standardization_numeric(lst, expected):
+    """[Summary]: Verify that standardization returns the correct z-scores.
 
-    [Description]: Runs parametrized inputs covering various probability
-    scenarios, comparing results against known expected values.
+    [Description]: Runs a range of numeric list inputs, comparing the result
+    against the known expected z-scores.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_numeric
     """
-    assert bayes_theorem(p_b_given_a, p_a, p_b) == pytest.approx(expected)
+    result = standardization(lst)
+    assert len(result) == len(expected)
+    for r, e in zip(result, expected):
+        assert r == pytest.approx(e)
 
 
-def test_bayes_theorem_zero_p_b():
-    """[Summary]: Verify that bayes_theorem raises when p_b is zero.
+def test_standardization_tuple_input():
+    """[Summary]: Verify that standardization accepts a tuple as input.
+
+    [Description]: Confirms the function handles tuple arguments the same way
+    it handles lists, returning the correct z-scores.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_tuple_input
     """
-    with pytest.raises(ValueError, match="p_b must be greater than zero"):
-        bayes_theorem(0.9, 0.01, 0)
+    result = standardization((1, 2, 3))
+    expected = [-1.224744871391589, 0.0, 1.224744871391589]
+    assert len(result) == len(expected)
+    for r, e in zip(result, expected):
+        assert r == pytest.approx(e)
+
+
+def test_standardization_invalid_types_prints_error(capsys):
+    """[Summary]: Verify that standardization prints an error for invalid types.
+
+    [Description]: Confirms that the function prints an error message when
+    provided with non-numeric values and returns an empty list.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_invalid_types_prints_error
+    """
+    result = standardization(['a', 'b', 'c'])
+    captured = capsys.readouterr()
+    assert "Invalid argument types." in captured.out
+    assert result == []
+
+
+def test_standardization_single_element():
+    """[Summary]: Verify that standardization handles single element lists.
+
+    [Description]: Confirms that the function prints an error message for
+    lists with fewer than 2 elements and returns the list itself.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_single_element
+    """
+    result = standardization([5])
+    assert result == []
+
+
+def test_standardization_zero_std_dev():
+    """[Summary]: Verify that standardization handles zero standard deviation.
+
+    [Description]: Confirms that the function returns a list of zeros when
+    all elements are identical.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_statistics.py -k test_standardization_zero_std_dev
+    """
+    result = standardization([2, 2, 2, 2])
+    assert result == [0.0, 0.0, 0.0, 0.0]

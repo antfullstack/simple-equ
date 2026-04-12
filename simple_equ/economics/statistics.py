@@ -131,18 +131,36 @@ def dot(x, w):
     return sum(x_i * w_i for x_i, w_i in zip(x, w))
 
 
-def bayes_theorem(p_b_given_a: float, p_a: float, p_b: float) -> float:
-    """[Summary]: Calculate the posterior probability using Bayes' Theorem.
+def standardization(elements: list | tuple) -> list[float]:
+    """[Summary]: Return the standardized (z-score) values of a list or tuple.
 
-    [Description]: Computes P(A|B) = (P(B|A) * P(A)) / P(B).
-    Returns the posterior probability of event A given that B has occurred.
+    [Description]: This function is an alias for the `standardize()` function,
+    which computes the z-scores for a given list or tuple of numerical values.
+    It converts the input to floats, calculates the mean and population standard
+    deviation, and returns the standardized values. Prints an error message when
+    invalid argument types are encountered or when the list has fewer than 2
+    elements.
 
     [Usage]: Typical usage example:
 
-        # P(B|A) = 0.9, P(A) = 0.01, P(B) = 0.05
-        result = bayes_theorem(0.9, 0.01, 0.05)
-        print(result) # 0.18
+        result = standardization([1, 2, 3, 4, 5])
+        print(result)
     """
-    if p_b == 0:
-        raise ValueError("p_b must be greater than zero")
-    return (p_b_given_a * p_a) / p_b
+    try:
+        elements_list = list(map(float, elements))
+    except ValueError:
+        print("Invalid argument types.")
+        return []
+
+    if len(elements_list) < 2:
+        print("List must have at least 2 elements.")
+        return []
+
+    mean_value = sum(elements_list) / len(elements_list)
+    variance = sum((x - mean_value) ** 2 for x in elements_list) / len(elements_list)
+    standard_deviation = variance ** 0.5
+
+    if standard_deviation == 0:
+        return [0.0] * len(elements_list)
+
+    return [(element - mean_value) / standard_deviation for element in elements_list]
