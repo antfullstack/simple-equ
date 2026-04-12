@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simple_equ"
-version = "1.3.819"
+version = "1.3.820"
 description = "An open source library containing multiple known STEM equations in a functional form."
 readme = "README.md"
 authors = [
