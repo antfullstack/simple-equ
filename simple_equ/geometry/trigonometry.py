@@ -109,7 +109,7 @@ def arctan(x: float | int, iter=20):
     return theta
 
 
-def arctan2(y: float | int, x: float | int) -> float:
+def arctan2(x: float | int, y: float | int) -> float:
     """[Summary]: Return the angle in radians between the positive x-axis and the
     point (x, y), computed as a two-argument arctangent.
 
@@ -135,3 +135,11 @@ def arctan2(y: float | int, x: float | int) -> float:
         return -constants.pi / 2
     # x == 0 and y == 0: undefined, match math.atan2 behaviour
     return 0.0
+
+def arcsin(x: float | int) -> float:
+    result = arctan2(x, algebra.sqrt(1 - x**2))
+    return result
+
+def arccos(x: float | int):
+    result = constants.pi / 2 - arcsin(x)
+    return result
