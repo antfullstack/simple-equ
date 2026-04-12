@@ -109,23 +109,29 @@ def arctan(x: float | int, iter=20):
     return theta
 
 
-def arcsin(x: float | int) -> float:
-    """[Summary]: Return the arcsine of x in radians.
+def arctan2(y: float | int, x: float | int) -> float:
+    """[Summary]: Return the angle in radians between the positive x-axis and the
+    point (x, y), computed as a two-argument arctangent.
 
-    [Description]: Computes the inverse sine of x using the identity
-    arcsin(x) = arctan(x / sqrt(1 - x^2)). The input must be in the range
-    [-1, 1]; values outside this range raise a ValueError.
+    [Description]: Unlike arctan(y/x), arctan2 takes both the sign of y and x
+    into account to determine the correct quadrant of the resulting angle.
+    The return value is in the range (-π, π].
 
     [Usage]: Typical usage example:
 
-        result = arcsin(0.5)   # returns approximately π/6 (0.5236...)
+        result = arctan2(1, 1)   # returns π/4 (first quadrant)
+        result = arctan2(1, -1)  # returns 3π/4 (second quadrant)
         print(result)
     """
-    if x < -1 or x > 1:
-        raise ValueError("arcsin(x) is only defined for x in [-1, 1]")
-    if x == 1:
+    if x > 0:
+        return arctan(y / x)
+    if x < 0 and y >= 0:
+        return arctan(y / x) + constants.pi
+    if x < 0 and y < 0:
+        return arctan(y / x) - constants.pi
+    if x == 0 and y > 0:
         return constants.pi / 2
-    if x == -1:
+    if x == 0 and y < 0:
         return -constants.pi / 2
-    # arcsin(x) = arctan(x / sqrt(1 - x^2))
-    return arctan(x / algebra.sqrt(1 - x * x))
+    # x == 0 and y == 0: undefined, match math.atan2 behaviour
+    return 0.0

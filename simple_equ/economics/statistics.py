@@ -97,6 +97,26 @@ def linear_regression(x: list[float] | list[int], y: list[float] | list[int]) ->
     return slope, intercept
 
 
+def probability(favorable_outcomes: int | float, possible_outcomes: int | float) -> float:
+    """[Summary]: Return the probability of an event as a float.
+
+    [Description]: Computes the classical probability by dividing the number of
+    favorable outcomes by the total number of possible outcomes. Raises a
+    ValueError when possible_outcomes is zero or when either argument is
+    negative.
+
+    [Usage]: Typical usage example:
+
+        result = probability(1, 6)   # probability of rolling a 4 on a dice
+        print(result)                # 0.16666...
+    """
+    if possible_outcomes == 0:
+        raise ValueError("possible_outcomes must be greater than zero")
+    if favorable_outcomes < 0 or possible_outcomes < 0:
+        raise ValueError("outcomes must be non-negative")
+    return favorable_outcomes / possible_outcomes
+
+
 def dot(x, w):
     """[Summary]: Return the dot product of two equally sized iterables.
 
