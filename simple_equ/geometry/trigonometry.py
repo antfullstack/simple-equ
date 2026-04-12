@@ -107,3 +107,31 @@ def arctan(x: float | int, iter=20):
         # which corresponds to x in [-1, 1].
         theta = theta - (_tan_rad(theta) - x) / (1 + _tan_rad(theta)**2)
     return theta
+
+
+def arctan2(y: float | int, x: float | int) -> float:
+    """[Summary]: Return the angle in radians between the positive x-axis and the
+    point (x, y), computed as a two-argument arctangent.
+
+    [Description]: Unlike arctan(y/x), arctan2 takes both the sign of y and x
+    into account to determine the correct quadrant of the resulting angle.
+    The return value is in the range (-π, π].
+
+    [Usage]: Typical usage example:
+
+        result = arctan2(1, 1)   # returns π/4 (first quadrant)
+        result = arctan2(1, -1)  # returns 3π/4 (second quadrant)
+        print(result)
+    """
+    if x > 0:
+        return arctan(y / x)
+    if x < 0 and y >= 0:
+        return arctan(y / x) + constants.pi
+    if x < 0 and y < 0:
+        return arctan(y / x) - constants.pi
+    if x == 0 and y > 0:
+        return constants.pi / 2
+    if x == 0 and y < 0:
+        return -constants.pi / 2
+    # x == 0 and y == 0: undefined, match math.atan2 behaviour
+    return 0.0
