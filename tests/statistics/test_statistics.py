@@ -4,7 +4,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from simple_equ.economics.statistics import mode, standardization, average, median, percentage, linear_regression, dot, bayes_theorem
+from simple_equ.statistics.statistics import mode, standardization, average, median, percentage, linear_regression, dot, bayes_theorem
 
 
 # ==============================================================================
@@ -45,7 +45,7 @@ def test_average_tuple_input():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_average_tuple_input
+        pytest tests/test_average_tuple_input
     """
     assert average((4, 8, 12)) == pytest.approx(8.0)
 
@@ -58,7 +58,7 @@ def test_average_string_integers():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_average_string_integers
+        pytest tests/test_average_string_integers
     """
     assert average(["1", "2", "3"]) == pytest.approx(2.0)
 
@@ -71,7 +71,7 @@ def test_average_invalid_types_prints_error(capsys):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_average_invalid_types_prints_error
+        pytest tests/test_average_invalid_types_prints_error
     """
     average(["a", "b", "c"])
     captured = capsys.readouterr()
@@ -86,7 +86,7 @@ def test_average_empty_list_raises():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_average_empty_list_raises
+        pytest tests/test_average_empty_list_raises
     """
     with pytest.raises(ZeroDivisionError):
         average([])
@@ -118,7 +118,7 @@ def test_median_numeric(lst, expected):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_median_numeric
+        pytest tests/test_median_numeric
     """
     assert median(lst) == pytest.approx(expected)
 
@@ -131,7 +131,7 @@ def test_median_tuple_input():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_median_tuple_input
+        pytest tests/test_median_tuple_input
     """
     assert median((10, 20, 30)) == pytest.approx(20)
 
@@ -144,7 +144,7 @@ def test_median_string_integers():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_median_string_integers
+        pytest tests/test_median_string_integers
     """
     assert median(["3", "1", "2"]) == pytest.approx(2)
 
@@ -157,7 +157,7 @@ def test_median_unsorted_even():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_median_unsorted_even
+        pytest tests/test_median_unsorted_even
     """
     assert median([4, 1, 3, 2]) == pytest.approx(2.5)
 
@@ -170,7 +170,7 @@ def test_median_invalid_types_prints_error(capsys):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_median_invalid_types_prints_error
+        pytest tests/test_median_invalid_types_prints_error
     """
     median(["x", "y", "z"])
     captured = capsys.readouterr()
@@ -185,7 +185,7 @@ def test_median_empty_list_raises():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_median_empty_list_raises
+        pytest tests/test_median_empty_list_raises
     """
     with pytest.raises((IndexError, ZeroDivisionError)):
         median([])
@@ -216,7 +216,7 @@ def test_percentage_numeric(fraction, whole, expected):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_percentage_numeric
+        pytest tests/test_percentage_numeric
     """
     assert percentage(fraction, whole) == pytest.approx(expected)
 
@@ -229,7 +229,7 @@ def test_percentage_float_precision():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_percentage_float_precision
+        pytest tests/test_percentage_float_precision
     """
     assert percentage(1, 3) == pytest.approx(33.3333, rel=1e-3)
 
@@ -242,7 +242,7 @@ def test_percentage_zero_whole_raises():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_percentage_zero_whole_raises
+        pytest tests/test_percentage_zero_whole_raises
     """
     with pytest.raises(ZeroDivisionError):
         percentage(10, 0)
@@ -256,7 +256,7 @@ def test_percentage_negative_whole():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_percentage_negative_whole
+        pytest tests/test_percentage_negative_whole
     """
     assert percentage(50, -100) == pytest.approx(-50.0)
 
@@ -269,7 +269,7 @@ def test_percentage_both_negative():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_percentage_both_negative
+        pytest tests/test_percentage_both_negative
     """
     assert percentage(-50, -100) == pytest.approx(50.0)
 
@@ -297,7 +297,7 @@ def test_linear_regression_slope_intercept(x, y, expected_slope, expected_interc
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_slope_intercept
+        pytest tests/test_linear_regression_slope_intercept
     """
     slope, intercept = linear_regression(x, y)
     assert slope == pytest.approx(expected_slope)
@@ -312,7 +312,7 @@ def test_linear_regression_returns_tuple():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_returns_tuple
+        pytest tests/test_linear_regression_returns_tuple
     """
     result = linear_regression([1, 2, 3], [2, 4, 6])
     assert isinstance(result, tuple)
@@ -328,7 +328,7 @@ def test_linear_regression_string_numbers():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_string_numbers
+        pytest tests/test_linear_regression_string_numbers
     """
     slope, intercept = linear_regression(["1", "2", "3"], ["2", "4", "6"])
     assert slope == pytest.approx(2.0)
@@ -343,7 +343,7 @@ def test_linear_regression_mismatched_lengths_prints_error(capsys):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_mismatched_lengths_prints_error
+        pytest tests/test_linear_regression_mismatched_lengths_prints_error
     """
     result = linear_regression([1, 2, 3], [1, 2])
     captured = capsys.readouterr()
@@ -359,7 +359,7 @@ def test_linear_regression_mismatched_lengths_returns_none():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_mismatched_lengths_returns_none
+        pytest tests/test_linear_regression_mismatched_lengths_returns_none
     """
     assert linear_regression([1, 2, 3], [1, 2]) is None
 
@@ -372,7 +372,7 @@ def test_linear_regression_invalid_types_prints_error(capsys):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_invalid_types_prints_error
+        pytest tests/test_linear_regression_invalid_types_prints_error
     """
     result = linear_regression(["a", "b"], [1, 2])
     captured = capsys.readouterr()
@@ -388,7 +388,7 @@ def test_linear_regression_invalid_types_returns_none():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_invalid_types_returns_none
+        pytest tests/test_linear_regression_invalid_types_returns_none
     """
     assert linear_regression(["a", "b"], [1, 2]) is None
 
@@ -401,7 +401,7 @@ def test_linear_regression_single_point_raises():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_linear_regression_single_point_raises
+        pytest tests/test_linear_regression_single_point_raises
     """
     with pytest.raises(ZeroDivisionError):
         linear_regression([1], [1])
@@ -431,7 +431,7 @@ def test_dot_numeric(x, w, expected):
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_dot_numeric
+        pytest tests/test_dot_numeric
     """
     assert dot(x, w) == pytest.approx(expected)
 
@@ -444,263 +444,6 @@ def test_dot_float_values():
 
     [Usage]: Typical usage example:
 
-        pytest tests/test_math_utils.py -k test_dot_float_values
+        pytest tests/test_dot_float_values
     """
     assert dot([0.5, 1.5], [2.0, 4.0]) == pytest.approx(7.0)
-
-
-def test_dot_empty_iterables():
-    """[Summary]: Verify that dot returns zero for two empty iterables.
-
-    [Description]: Confirms that zip over two empty sequences produces no
-    pairs, and the sum of an empty sequence is zero.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_dot_empty_iterables
-    """
-    assert dot([], []) == 0
-
-
-def test_dot_mismatched_lengths_truncates():
-    """[Summary]: Verify that dot truncates to the shorter iterable.
-
-    [Description]: Confirms the zip-based implementation stops at the shortest
-    input, effectively ignoring trailing elements of the longer sequence.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_dot_mismatched_lengths_truncates
-    """
-    assert dot([1, 2, 3], [4, 5]) == pytest.approx(14)
-
-
-def test_dot_tuple_inputs():
-    """[Summary]: Verify that dot accepts tuples as input.
-
-    [Description]: Confirms the function handles tuple arguments the same way
-    it handles lists, returning the correct dot product.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_dot_tuple_inputs
-    """
-    assert dot((1, 2, 3), (4, 5, 6)) == pytest.approx(32)
-
-
-def test_dot_orthogonal_vectors():
-    """[Summary]: Verify that dot returns zero for orthogonal vectors.
-
-    [Description]: Confirms that two perpendicular vectors produce a dot
-    product of zero, as expected from their geometric relationship.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_dot_orthogonal_vectors
-    """
-    assert dot([1, 0], [0, 1]) == pytest.approx(0)
-
-
-def test_dot_parallel_unit_vectors():
-    """[Summary]: Verify that dot returns one for identical unit vectors.
-
-    [Description]: Confirms that the dot product of a unit vector with itself
-    equals one, consistent with a cosine of zero degrees.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_dot_parallel_unit_vectors
-    """
-    assert dot([1, 0], [1, 0]) == pytest.approx(1)
-
-
-# ==============================================================================
-# standardization()
-# ==============================================================================
-
-@pytest.mark.parametrize(
-    "lst,expected",
-    [
-        ([1, 2, 3, 4, 5], [-1.414213562373095, -0.7071067811865475, 0.0, 0.7071067811865475, 1.414213562373095]),
-        ([10, 10, 10], [0.0, 0.0, 0.0]),
-        ([0, 1], [-1.0, 1.0]),
-    ],
-)
-def test_standardization_numeric(lst, expected):
-    """[Summary]: Verify that standardization returns the correct z-scores.
-
-    [Description]: Runs a range of numeric list inputs, comparing the result
-    against the known expected z-scores.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_statistics.py -k test_standardization_numeric
-    """
-    result = standardization(lst)
-    assert len(result) == len(expected)
-    for r, e in zip(result, expected):
-        assert r == pytest.approx(e)
-
-
-def test_standardization_tuple_input():
-    """[Summary]: Verify that standardization accepts a tuple as input.
-
-    [Description]: Confirms the function handles tuple arguments the same way
-    it handles lists, returning the correct z-scores.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_statistics.py -k test_standardization_tuple_input
-    """
-    result = standardization((1, 2, 3))
-    expected = [-1.224744871391589, 0.0, 1.224744871391589]
-    assert len(result) == len(expected)
-    for r, e in zip(result, expected):
-        assert r == pytest.approx(e)
-
-
-def test_standardization_invalid_types_prints_error(capsys):
-    """[Summary]: Verify that standardization prints an error for invalid types.
-
-    [Description]: Confirms that the function prints an error message when
-    provided with non-numeric values and returns an empty list.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_statistics.py -k test_standardization_invalid_types_prints_error
-    """
-    result = standardization(['a', 'b', 'c'])
-    captured = capsys.readouterr()
-    assert "Invalid argument types." in captured.out
-    assert result == []
-
-
-def test_standardization_single_element():
-    """[Summary]: Verify that standardization handles single element lists.
-
-    [Description]: Confirms that the function prints an error message for
-    lists with fewer than 2 elements and returns the list itself.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_statistics.py -k test_standardization_single_element
-    """
-    result = standardization([5])
-    assert result == []
-
-
-def test_standardization_zero_std_dev():
-    """[Summary]: Verify that standardization handles zero standard deviation.
-
-    [Description]: Confirms that the function returns a list of zeros when
-    all elements are identical.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_statistics.py -k test_standardization_zero_std_dev
-    """
-    result = standardization([2, 2, 2, 2])
-    assert result == [0.0, 0.0, 0.0, 0.0]
-
-def test_median_basic_odd():
-    """[Summary]: Verify that median returns the middle value for an odd-length list.
-
-    [Description]: Confirms that a sorted odd-length list of integers returns
-    the exact middle element without averaging.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_median_basic_odd
-    """
-    assert median([1, 2, 3, 4, 5]) == 3
-
-
-def test_median_basic_even():
-    """[Summary]: Verify that median averages the two central values for an even-length list.
-
-    [Description]: Confirms that a sorted even-length list returns the average
-    of the two middle elements as a float.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_median_basic_even
-    """
-    assert median([1, 2, 3, 4]) == pytest.approx(2.5)
-
-
-def test_median_string_numbers():
-    """[Summary]: Verify that median coerces string digits to integers.
-
-    [Description]: Confirms that lists of numeric strings are converted via
-    int() before sorting and computing the median.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_median_string_numbers
-    """
-    assert median(["3", "1", "2"]) == 2
-
-
-def test_median_tuple_input():
-    """[Summary]: Verify that median accepts a tuple as input.
-
-    [Description]: Confirms that a tuple of integers is handled identically
-    to a list, returning the correct median value.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_median_tuple_input
-    """
-    assert median((10, 20, 30)) == 20
-
-
-def test_mode_basic():
-    """[Summary]: Verify that mode returns the most frequent element.
-
-    [Description]: Confirms that a list with a clear single most-common
-    element returns that element correctly.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_mode_basic
-    """
-    assert mode([1, 2, 2, 3]) == 2
-
-
-def test_mode_strings():
-    """[Summary]: Verify that mode works with string elements.
-
-    [Description]: Confirms that a list of strings returns the string with
-    the highest frequency, not limited to numeric types.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_mode_strings
-    """
-    assert mode(["a", "b", "a", "c"]) == "a"
-
-
-def test_mode_tuple_input():
-    """[Summary]: Verify that mode accepts a tuple as input.
-
-    [Description]: Confirms that a tuple of integers is handled identically
-    to a list, returning the most frequently occurring element.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_mode_tuple_input
-    """
-    assert mode((1, 1, 2, 3)) == 1
-
-
-def test_mode_tie_returns_first():
-    """[Summary]: Verify that mode returns the first encountered element on a tie.
-
-    [Description]: Confirms that when two elements share the highest frequency,
-    the element that appears first in the list is returned by Counter.
-
-    [Usage]: Typical usage example:
-
-        pytest tests/test_math_utils.py -k test_mode_tie_returns_first
-    """
-    assert mode([1, 2, 1, 2, 3]) == 1

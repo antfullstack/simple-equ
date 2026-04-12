@@ -16,6 +16,7 @@ def average(lst: list | tuple) -> int | float:
         lst = list(map(int, lst))
     except ValueError:
         print("Invalid argument types.")
+        return None
 
     num_sum = sum(lst)
     return num_sum / len(lst)
@@ -37,6 +38,7 @@ def median(lst: list | tuple) -> int | float:
         lst = list(map(int, lst))
     except ValueError:
         print("Invalid argument types.")
+        return None
 
     sorted_list = sorted(lst)
     median_index = (len(sorted_list) - 1) // 2
