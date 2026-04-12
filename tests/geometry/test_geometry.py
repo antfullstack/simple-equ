@@ -1,7 +1,7 @@
-import pytest
 import math
 from pathlib import Path
 import sys
+import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -490,3 +490,137 @@ def test_arctan_near_minus_pi_over_2():
     x = -1e6
     result = geo.arctan(x)
     assert result == pytest.approx(-geo.PI / 2, rel=1e-6)
+
+def test_arcsin_zero():
+    """[Summary]: Verify that arcsin(0) returns 0.0.
+
+    [Description]: Confirms that the base case of zero input produces
+    exactly zero, since arctan2(0, 1) == 0.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arcsin_zero
+    """
+    assert geo.arcsin(0) == pytest.approx(0.0)
+
+
+def test_arcsin_one_half():
+    """[Summary]: Verify that arcsin(0.5) returns π/6.
+
+    [Description]: Confirms that a well-known exact value is computed
+    correctly, checking the result against math.pi / 6.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arcsin_one_half
+    """
+    assert geo.arcsin(0.5) == pytest.approx(math.pi / 6)
+
+
+def test_arcsin_one():
+    """[Summary]: Verify that arcsin(1) returns π/2.
+
+    [Description]: Confirms the upper boundary of the domain, where the
+    result should equal π/2 (90 degrees).
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arcsin_one
+    """
+    assert geo.arcsin(1) == pytest.approx(math.pi / 2)
+
+
+def test_arcsin_negative():
+    """[Summary]: Verify that arcsin returns a negative value for negative input.
+
+    [Description]: Confirms that arcsin(-0.5) equals -π/6, validating
+    the odd-function symmetry of the inverse sine.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arcsin_negative
+    """
+    assert geo.arcsin(-0.5) == pytest.approx(-math.pi / 6)
+
+
+def test_arcsin_integer_input():
+    """[Summary]: Verify that arcsin accepts an integer argument.
+
+    [Description]: Confirms that passing an int (rather than a float)
+    does not raise a TypeError and still returns the correct result.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arcsin_integer_input
+    """
+    assert geo.arcsin(0) == pytest.approx(0.0)
+
+
+# ---------------------------------------------------------------------------
+# arccos
+# ---------------------------------------------------------------------------
+
+def test_arccos_zero():
+    """[Summary]: Verify that arccos(0) returns π/2.
+
+    [Description]: Confirms the base case where the cosine of π/2 is 0,
+    so the inverse should return π/2.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arccos_zero
+    """
+    assert geo.arccos(0) == pytest.approx(math.pi / 2)
+
+
+def test_arccos_one():
+    """[Summary]: Verify that arccos(1) returns 0.0.
+
+    [Description]: Confirms the upper boundary of the domain, where
+    cos(0) == 1 so the inverse must return 0.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arccos_one
+    """
+    assert geo.arccos(1) == pytest.approx(0.0)
+
+
+def test_arccos_negative_one():
+    """[Summary]: Verify that arccos(-1) returns π.
+
+    [Description]: Confirms the lower boundary of the domain, where
+    cos(π) == -1 so the inverse must return π.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arccos_negative_one
+    """
+    assert geo.arccos(-1) == pytest.approx(math.pi)
+
+
+def test_arccos_one_half():
+    """[Summary]: Verify that arccos(0.5) returns π/3.
+
+    [Description]: Confirms a well-known exact value, checking the result
+    against math.pi / 3 to validate the complementary-angle identity.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arccos_one_half
+    """
+    assert geo.arccos(0.5) == pytest.approx(math.pi / 3)
+
+
+def test_arccos_complementary_identity():
+    """[Summary]: Verify that arcsin(x) + arccos(x) equals π/2 for arbitrary x.
+
+    [Description]: Confirms the fundamental complementary identity holds
+    numerically for a mid-range value, cross-validating both functions.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_trig_inverses.py -k test_arccos_complementary_identity
+    """
+    x = 0.7
+    assert geo.arcsin(x) + geo.arccos(x) == pytest.approx(math.pi / 2)

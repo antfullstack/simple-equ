@@ -137,9 +137,32 @@ def arctan2(x: float | int, y: float | int) -> float:
     return 0.0
 
 def arcsin(x: float | int) -> float:
+    """[Summary]: Return the arcsine of x in radians.
+
+    [Description]: Computes the inverse sine by delegating to arctan2 with
+    x and sqrt(1 - x²) as arguments, exploiting the identity
+    arcsin(x) = arctan2(x, sqrt(1 - x²)). Input must satisfy -1 <= x <= 1.
+
+    [Usage]: Typical usage example:
+
+        result = arcsin(0.5)
+        print(result)  # ~0.5236 (π/6)
+    """
     result = arctan2(x, algebra.sqrt(1 - x**2))
     return result
 
-def arccos(x: float | int):
+
+def arccos(x: float | int) -> float:
+    """[Summary]: Return the arccosine of x in radians.
+
+    [Description]: Derives the inverse cosine from arcsin using the
+    complementary-angle identity arccos(x) = π/2 - arcsin(x).
+    Input must satisfy -1 <= x <= 1; the result lies in [0, π].
+
+    [Usage]: Typical usage example:
+
+        result = arccos(0.5)
+        print(result)  # ~1.0472 (π/3)
+    """
     result = constants.pi / 2 - arcsin(x)
     return result

@@ -1,3 +1,5 @@
+from collections import Counter
+
 def average(lst: list | tuple) -> int | float:
     """[Summary]: Return the arithmetic mean of a list or tuple.
 
@@ -43,6 +45,20 @@ def median(lst: list | tuple) -> int | float:
         return (sorted_list[median_index] + sorted_list[median_index + 1]) / 2
     return sorted_list[median_index]
 
+def mode(lst: list | tuple):
+    """[Summary]: Return the mode value of a list or tuple.
+
+    [Description]: Uses a Counter to tally element frequencies and returns
+    the most frequently occurring element. If multiple elements share the
+    highest frequency, the first one encountered is returned.
+
+    [Usage]: Typical usage example:
+
+        result = mode([1, 2, 2, 3])
+        print(result)
+    """
+    mode = Counter(lst).most_common(1)[0][0]
+    return mode
 
 def percentage(fraction, whole):
     """[Summary]: Convert a fraction and whole value into a percentage.

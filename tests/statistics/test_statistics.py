@@ -4,7 +4,7 @@ import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
-from simple_equ.economics.statistics import average, median, percentage, linear_regression, dot, bayes_theorem
+from simple_equ.economics.statistics import mode, standardization, average, median, percentage, linear_regression, dot, bayes_theorem
 
 
 # ==============================================================================
@@ -601,3 +601,106 @@ def test_standardization_zero_std_dev():
     """
     result = standardization([2, 2, 2, 2])
     assert result == [0.0, 0.0, 0.0, 0.0]
+
+def test_median_basic_odd():
+    """[Summary]: Verify that median returns the middle value for an odd-length list.
+
+    [Description]: Confirms that a sorted odd-length list of integers returns
+    the exact middle element without averaging.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_median_basic_odd
+    """
+    assert median([1, 2, 3, 4, 5]) == 3
+
+
+def test_median_basic_even():
+    """[Summary]: Verify that median averages the two central values for an even-length list.
+
+    [Description]: Confirms that a sorted even-length list returns the average
+    of the two middle elements as a float.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_median_basic_even
+    """
+    assert median([1, 2, 3, 4]) == pytest.approx(2.5)
+
+
+def test_median_string_numbers():
+    """[Summary]: Verify that median coerces string digits to integers.
+
+    [Description]: Confirms that lists of numeric strings are converted via
+    int() before sorting and computing the median.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_median_string_numbers
+    """
+    assert median(["3", "1", "2"]) == 2
+
+
+def test_median_tuple_input():
+    """[Summary]: Verify that median accepts a tuple as input.
+
+    [Description]: Confirms that a tuple of integers is handled identically
+    to a list, returning the correct median value.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_median_tuple_input
+    """
+    assert median((10, 20, 30)) == 20
+
+
+def test_mode_basic():
+    """[Summary]: Verify that mode returns the most frequent element.
+
+    [Description]: Confirms that a list with a clear single most-common
+    element returns that element correctly.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_mode_basic
+    """
+    assert mode([1, 2, 2, 3]) == 2
+
+
+def test_mode_strings():
+    """[Summary]: Verify that mode works with string elements.
+
+    [Description]: Confirms that a list of strings returns the string with
+    the highest frequency, not limited to numeric types.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_mode_strings
+    """
+    assert mode(["a", "b", "a", "c"]) == "a"
+
+
+def test_mode_tuple_input():
+    """[Summary]: Verify that mode accepts a tuple as input.
+
+    [Description]: Confirms that a tuple of integers is handled identically
+    to a list, returning the most frequently occurring element.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_mode_tuple_input
+    """
+    assert mode((1, 1, 2, 3)) == 1
+
+
+def test_mode_tie_returns_first():
+    """[Summary]: Verify that mode returns the first encountered element on a tie.
+
+    [Description]: Confirms that when two elements share the highest frequency,
+    the element that appears first in the list is returned by Counter.
+
+    [Usage]: Typical usage example:
+
+        pytest tests/test_math_utils.py -k test_mode_tie_returns_first
+    """
+    assert mode([1, 2, 1, 2, 3]) == 1
